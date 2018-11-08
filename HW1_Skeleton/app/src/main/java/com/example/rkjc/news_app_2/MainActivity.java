@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
         adapter=new NewsRecyclerViewAdapter(news, this);
         rView.setAdapter(adapter);
         rView.setLayoutManager(new LinearLayoutManager(this));
-//        NewsQueryTask task = new NewsQueryTask();
-//        task.execute();
-//        getNews();
+
     }
 
 

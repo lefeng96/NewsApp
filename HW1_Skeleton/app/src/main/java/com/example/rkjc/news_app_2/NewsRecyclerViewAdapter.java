@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-
 
 
 public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsItemViewHolder> {
@@ -26,9 +24,8 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         this.newsItemList= newsItemList;
         this.context=context;
     }
-    @NonNull
     @Override
-    public NewsItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public NewsItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context1 = viewGroup.getContext();
         int layoutIdForListItem = R.layout.news_item;
         LayoutInflater inflater = LayoutInflater.from(context1);
@@ -41,7 +38,7 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsItemViewHolder holder, int position) {
+    public void onBindViewHolder( NewsItemViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
         holder.bind(position);
     }
