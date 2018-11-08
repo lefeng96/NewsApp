@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.MenuInflater;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +25,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView mUrlDisplayTextView;
 
+    private TextView mSearchResultsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +72,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int itemThatWasClickedId = item.getItemId();
-            if (itemThatWasClickedId == R.id.get_news) {
-                getNews();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
+
+    }
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.tbar_menu, menu);
+//        return true;
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.get_news) {
+            getNews();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

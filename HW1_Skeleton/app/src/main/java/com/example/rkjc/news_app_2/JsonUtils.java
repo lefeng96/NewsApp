@@ -10,7 +10,7 @@ public class JsonUtils {
     public static ArrayList<NewsItem> parseNews(String JSONString){
         ArrayList<NewsItem> newsList = new ArrayList<>();
         try{
-            JSONObject main = new JSONObject(jsonResult);
+            JSONObject main = new JSONObject(JSONString);
             JSONArray list = main.getJSONArray("articles");
 
             for(int i = 0; i < list.length(); i++){

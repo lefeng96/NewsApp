@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -14,14 +13,15 @@ import android.content.Intent;
 import android.net.Uri;
 
 
+
 public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsItemViewHolder> {
 
-    private static final String TAG = NewsRecyclerViewAdapterAdapter.class.getSimpleName();
+    private static final String TAG = NewsRecyclerViewAdapter.class.getSimpleName();
 
     ArrayList<NewsItem> newsItemList;
     Context context;
 
-    public NewsAdapter(ArrayList<NewsItem> newsItemList, Context context) {
+    public NewsRecyclerViewAdapter(ArrayList<NewsItem> newsItemList, Context context) {
         this.newsItemList= newsItemList;
         this.context=context;
     }
@@ -47,7 +47,7 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
 
     @Override
     public int getItemCount() {
-        return mNumberItems;
+        return newsItemList.size();
     }
 
     class NewsItemViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +61,6 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             publishedAt = itemView.findViewById(R.id.date);
-            view.setOnClickListener(this);
         }
 
 
@@ -69,12 +68,12 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
             title.setText(newsItemList.get(listIndex).getTitle());
             description.setText(newsItemList.get(listIndex).getDescription());
             publishedAt.setText(newsItemList.get(listIndex).getPublishedAt());
-
+            final String url =newsItemList.get(listIndex).getUrl().toString();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(newsItemList.get(listIndex).getUrl().getText().toString()));
+                    intent.setData(Uri.parse(url));
                     context.startActivity(intent);
                 }
             });

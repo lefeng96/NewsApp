@@ -56,7 +56,7 @@ public class MainActivityTest {
 
     @Before
     public void setup(){
-        onView(withId(R.id.action_search)).perform(click());
+        onView(withId(R.id.get_news)).perform(click());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class MainActivityTest {
 
     @Test
     public void testRecyclerViewItemClick(){
-        onView(withId(R.id.action_search)).perform(click());
+        onView(withId(R.id.get_news)).perform(click());
 
         Intents.init();
         Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW));
