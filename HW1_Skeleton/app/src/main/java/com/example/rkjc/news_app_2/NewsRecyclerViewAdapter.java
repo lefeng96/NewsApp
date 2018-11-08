@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 
 
@@ -25,12 +26,12 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         this.newsItemList= newsItemList;
         this.context=context;
     }
-
+    @NonNull
     @Override
-    public NewsItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
+    public NewsItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        Context context1 = viewGroup.getContext();
         int layoutIdForListItem = R.layout.news_item;
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context1);
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
@@ -40,7 +41,7 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
     }
 
     @Override
-    public void onBindViewHolder(NewsItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsItemViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
         holder.bind(position);
     }
@@ -65,10 +66,11 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
 
 
         void bind(final int listIndex) {
-            title.setText(newsItemList.get(listIndex).getTitle());
-            description.setText(newsItemList.get(listIndex).getDescription());
-            publishedAt.setText(newsItemList.get(listIndex).getPublishedAt());
-            final String url =newsItemList.get(listIndex).getUrl().toString();
+            title.setText("Title: " +newsItemList.get(listIndex).getTitle());
+            description.setText("Description: " +newsItemList.get(listIndex).getDescription());
+            publishedAt.setText("Date: " +newsItemList.get(listIndex).getPublishedAt());
+            final String url =newsItemList.get(listIndex).getUrl();
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

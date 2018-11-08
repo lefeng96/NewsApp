@@ -8,16 +8,16 @@ public class NewsItem {
     private String url;
     private String urlToImage;
     private String publishedAt;
-    private String content;
+//    private String content;
 
-    public NewsItem(String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
+    public NewsItem(String author, String title, String description, String url, String urlToImage, String publishedAt) {
         this.author = author;
         this.title = title;
         this.description = description;
         this.url = url;
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
-        this.content = content;
+        //this.content = content;
     }
 
     public String getAuthor() {
@@ -67,13 +67,13 @@ public class NewsItem {
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
     }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+//
+//    public String getContent() {
+//        return content;
+//    }
+//
+//    public void setContent(String content) {
+//        this.content = content;
+//    }
 
 }

@@ -1,20 +1,13 @@
 package com.example.rkjc.news_app_2;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.view.MenuInflater;
 
 import java.io.IOException;
@@ -25,23 +18,24 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mUrlDisplayTextView;
-
     private TextView mSearchResultsTextView;
+    private RecyclerView rView;
+    private NewsRecyclerViewAdapter adapter;
+    private ArrayList<NewsItem> news = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        rView = findViewById(R.id.news_recyclerview);
+        adapter=new NewsRecyclerViewAdapter(news, this);
+        rView.setAdapter(adapter);
+        rView.setLayoutManager(new LinearLayoutManager(this));
+//        NewsQueryTask task = new NewsQueryTask();
+//        task.execute();
+//        getNews();
     }
-
-    private void getNews() {
-        URL newsUrl = NetworkUtils.buildURL();
-        // COMPLETED (4) Create a new GithubQueryTask and call its execute method, passing in the url to query
-        new NewsQueryTask().execute(newsUrl);
-    }
-
 
 
     public class NewsQueryTask extends AsyncTask<URL, Void, String> {
@@ -55,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
-            String results = null;
+            String results= null;
             try {
-                results = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                results =  NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,31 +61,45 @@ public class MainActivity extends AppCompatActivity {
         // COMPLETED (3) Override onPostExecute to display the results in the TextView
         @Override
         protected void onPostExecute(String results) {
-            if (results != null && !results.equals("")) {
-                mSearchResultsTextView.setText(results);
-            }
+            super.onPostExecute(results);
+//            if (results != null && !results.equals("")) {
+//                mSearchResultsTextView.setText(results);
+//            }
+            news = JsonUtils.parseNews(results);
+            adapter.newsItemList.addAll(news);
+            adapter.notifyDataSetChanged();
         }
 
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.tbar_menu, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
         if (itemThatWasClickedId == R.id.get_news) {
+//            news = JsonUtils.parseNews(results);
+//            adapter.newsItemList = news;
+//            adapter.notifyDataSetChanged();
             getNews();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void getNews() {
+        URL newsUrl = NetworkUtils.buildURL();
+        // COMPLETED (4) Create a new GithubQueryTask and call its execute method, passing in the url to query
+        new NewsQueryTask().execute(newsUrl);
+    }
+
 
 
 
