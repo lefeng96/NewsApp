@@ -1,5 +1,7 @@
 package com.example.rkjc.news_app_2;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,14 +24,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rView;
     private NewsRecyclerViewAdapter adapter;
     private ArrayList<NewsItem> news = new ArrayList<>();
+    NewsItemViewModel newsItemViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
+        newsItemViewModel = ViewModelProviders.of(this).get(NewsItemViewModel.class);
         rView = findViewById(R.id.news_recyclerview);
-        adapter=new NewsRecyclerViewAdapter(news, this);
+
+        adapter=new NewsRecyclerViewAdapter(newsItemViewModel, this);
         rView.setAdapter(adapter);
         rView.setLayoutManager(new LinearLayoutManager(this));
 
