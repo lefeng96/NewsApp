@@ -1,9 +1,5 @@
 package com.example.rkjc.news_app_2;
 
-import com.example.rkjc.news_app_2.data.NewsItemRepository;
-import com.firebase.jobdispatcher.Job;
-import com.firebase.jobdispatcher.JobParameters;
-import com.firebase.jobdispatcher.RetryStrategy;
 import android.content.Context;
 import com.firebase.jobdispatcher.JobService;
 import android.os.AsyncTask;
@@ -22,7 +18,6 @@ public class NewsUpdateFirebaseJobService extends JobService {
                 UpdateTask.executeTask(context, UpdateTask.UPDATE_NEWS);
                 mNewsItemRepo = new NewsItemRepository(getApplication());
                 mNewsItemRepo.makeNewsSearchQuery();
-                Log.d("ASYNCTASK", "doInBackground: HIIII");
                 return null;
             }
 

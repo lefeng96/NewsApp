@@ -1,6 +1,5 @@
 package com.example.rkjc.news_app_2;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,10 +13,6 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.example.rkjc.news_app_2.MainActivity;
-import com.example.rkjc.news_app_2.R;
-import com.example.rkjc.news_app_2.sync.NewsUpdateIntentService;
-import com.example.rkjc.news_app_2.sync.UpdateTask;
 
 public class NotificationUtils {
     private static final int NEWS_REMINDER_PENDING_INTENT_ID = 1;
@@ -43,9 +38,9 @@ public class NotificationUtils {
                 .setSmallIcon(R.drawable.ic_icons8_news)
                 .setLargeIcon(largeIcon(context))
                 .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_content))
+                .setContentText("New articles")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
-                        context.getString(R.string.notification_content)))
+                        "New Articles"))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .addAction(ignoreReminderAction(context))

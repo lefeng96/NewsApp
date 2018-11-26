@@ -4,12 +4,6 @@ package com.example.rkjc.news_app_2;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-
-import com.example.rkjc.news_app_2.sync.UpdateTask;
-import com.example.rkjc.news_app_2.utils.JsonUtils;
-import com.example.rkjc.news_app_2.utils.NetworkUtils;
-import com.example.rkjc.news_app_2.NewsRecyclerViewAdapter;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -69,7 +63,7 @@ public class NewsItemRepository {
     }
 
     public void makeNewsSearchQuery(){
-        URL newsSearchUrl = NetworkUtils.buildUrl();
+        URL newsSearchUrl = NetworkUtils.buildURL();
         new NewsQueryTask().execute(newsSearchUrl);
     }
 

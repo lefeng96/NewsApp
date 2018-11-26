@@ -1,4 +1,4 @@
-package com.example.rkjc.news_app_2.data;
+package com.example.rkjc.news_app_2;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -9,12 +9,10 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface NewsItemDAO {
+public interface NewsItemDao {
 
     @Insert
     void insert(List<NewsItem> newsItem);
-
-    //If conflicts are possible, you can use @Insert(onConflict = OnConflictStrategy.REPLACE)
 
     @Delete
     void delete(List<NewsItem> newsItem);

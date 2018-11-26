@@ -1,81 +1,97 @@
 package com.example.rkjc.news_app_2;
 
-
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
-import android.content.Intent;
-import android.net.Uri;
+import com.squareup.picasso.Picasso;
+import java.util.List;
 
 
-public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsItemViewHolder> {
+public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
-    private static final String TAG = NewsRecyclerViewAdapter.class.getSimpleName();
+    private List<NewsItem> articles;
+    final private ListItemClickListener mOnClickListener;
 
-    ArrayList<NewsItem> newsItemList;
-    Context context;
+    private NewsItemViewModel viewModel;
 
-    public NewsRecyclerViewAdapter(ArrayList<NewsItem> newsItemList, Context context) {
-        this.newsItemList= newsItemList;
-        this.context=context;
+    public NewsRecyclerViewAdapter( NewsItemViewModel viewModel, ListItemClickListener mOnClickListener){
+        this.viewModel = viewModel;
+        this.mOnClickListener = mOnClickListener;
     }
+
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
     @Override
-    public NewsItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Context context1 = viewGroup.getContext();
+    public NewsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        Context context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.news_item;
-        LayoutInflater inflater = LayoutInflater.from(context1);
+        LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        NewsItemViewHolder viewHolder = new NewsItemViewHolder(view);
+        NewsViewHolder viewHolder = new NewsViewHolder(view);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder( NewsItemViewHolder holder, int position) {
-        Log.d(TAG, "#" + position);
-        holder.bind(position);
+    public void onBindViewHolder( NewsViewHolder articleViewHolder, final int i) {
+        articleViewHolder.bind(i);
+    }
+
+    void setNewsItems(List<NewsItem> newsItems){
+        articles = newsItems;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return newsItemList.size();
+        if(articles != null){
+            return articles.size();
+        } else {
+            return 0;
+        }
     }
 
-    class NewsItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView description;
-        public TextView publishedAt;
+    class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        ImageView mArticleImage;
+        TextView mArticleTitle;
+        TextView mArticleDescription;
 
 
-        public NewsItemViewHolder(View itemView) {
+        public NewsViewHolder(View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
-            description = itemView.findViewById(R.id.description);
-            publishedAt = itemView.findViewById(R.id.date);
+
+            mArticleImage = itemView.findViewById(R.id.image);
+            mArticleTitle = itemView.findViewById(R.id.title);
+            mArticleDescription = itemView.findViewById(R.id.description);
+
+            itemView.setOnClickListener(this);
         }
 
+        void bind(int position){
+            Uri imageLink = Uri.parse(articles.get(position).getUrlToImage());
 
-        void bind(final int listIndex) {
-            title.setText("Title: " +newsItemList.get(listIndex).getTitle());
-            description.setText("Description: " +newsItemList.get(listIndex).getDescription());
-            publishedAt.setText("Date: " +newsItemList.get(listIndex).getPublishedAt());
-            final String url =newsItemList.get(listIndex).getUrl();
+            if(imageLink != null){
+                Picasso.get().load(imageLink).into(mArticleImage);
+            }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    context.startActivity(intent);
-                }
-            });
+            mArticleTitle.setText(articles.get(position).getTitle());
+            mArticleDescription.setText(articles.get(position).getPublishedAt() + " . " +articles.get(position).getDescription());
+        }
+
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 
