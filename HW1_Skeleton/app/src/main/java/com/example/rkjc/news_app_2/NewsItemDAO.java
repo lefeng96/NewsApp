@@ -2,7 +2,6 @@ package com.example.rkjc.news_app_2;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -13,9 +12,6 @@ public interface NewsItemDao {
 
     @Insert
     void insert(List<NewsItem> newsItem);
-
-    @Delete
-    void delete(List<NewsItem> newsItem);
 
     @Query("DELETE FROM news_item")
     void deleteAll();

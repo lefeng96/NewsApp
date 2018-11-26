@@ -1,7 +1,6 @@
 package com.example.rkjc.news_app_2;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerViewA
 
     private RecyclerView rView;
     private NewsRecyclerViewAdapter adapter;
-    private ArrayList<NewsItem> news = new ArrayList<>();
+    //private ArrayList<NewsItem> news = new ArrayList<>();
     NewsItemViewModel newsItemViewModel;
 
     @Override

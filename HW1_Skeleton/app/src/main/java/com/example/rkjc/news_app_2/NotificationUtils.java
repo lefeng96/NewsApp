@@ -35,7 +35,7 @@ public class NotificationUtils {
         NotificationCompat.Builder notificationBuilder = new
                 NotificationCompat.Builder(context, NEWS_REMINDER_NOTIFICATION_CHANNEL_ID)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSmallIcon(R.drawable.ic_icons8_news)
+                .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(largeIcon(context))
                 .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText("New articles")
@@ -75,16 +75,14 @@ public class NotificationUtils {
                 .getService(context, ACTION_IGNORE_PENDING_INTENT, ignoreReminderIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Action ignoreReminderAction = new NotificationCompat.Action(R.drawable.ic_cancel_black_24dp,
-                "Beat it!",
-                ignoreReminderPendingIntent);
+        NotificationCompat.Action ignoreReminderAction = new NotificationCompat.Action(R.drawable.ng, "Close", ignoreReminderPendingIntent);
         return ignoreReminderAction;
 
     }
 
     private static Bitmap largeIcon(Context context){
         Resources res = context.getResources();
-        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.ic_icons8_news);
+        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.icon);
         return largeIcon;
     }
 }
